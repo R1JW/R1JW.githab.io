@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КудМил2025 - Работа 4</title>
+    <style>
+        .scrollable::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .scrollable::-webkit-scrollbar-track {
+            background: rgb(166, 193, 166);
+        }
+
+        .scrollable::-webkit-scrollbar-thumb {
+            background-color: green;
+            border: 2px solid rgb(0, 75, 0);
+        }
+
+
+
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #f4f4f9;
+            font-family: 'Verdana', sans-serif;
+            color: #333;
+        }
+        * {
+            box-sizing: border-box;
+            font-family: 'Arial';
+        }
+        p {
+            margin: 0px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            height: 40px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            padding-top: 3px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"]:focus{
+            outline: none;
+            background-color: rgb(255, 255, 255);
+        }
+
+        sub{
+            margin-top: 12px;
+        }
+        sup{
+            margin-top: -16px;
+        }
+        .sub{
+            margin-left: -8px;
+        }
+
+
+
+
+        .values {
+            display: flex;
+            height: 90vh;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .values section {
+            border: 2px solid green;
+        }
+        .p0 {
+            width: 49%;
+        }
+        .flex-section {
+            width: 49%;
+            display: flex;
+            flex-direction: column;
+        }
+        .l,.u{
+            margin-bottom: 10px;
+        }
+        .inner-head{
+            width: 100%;
+            display: flex;
+            margin-right: 10px;
+            justify-content: space-between;
+        }
+        .p-title, .p{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .p-title{
+            width: 80%;
+        }
+        .t .p-title{
+            width: 100%;
+        }
+        .p{
+            width: 20%;
+        }
+        .inputs {
+            height: calc(100% - 40px);
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-block, .time-block {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid black;
+            padding: 1px;
+            background-color: rgb(220, 255, 220);
+            color: black
+        }
+        .time-block p {
+            width: 50%;
+            font-size: 16px;
+            padding: 3px;
+            font-weight: 500; 
+        }
+        .time-block label {
+            width: 5%;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .input-block label {
+            width: 80%;
+            font-size: 16px;
+            padding: 3px;
+            font-weight: 500;
+        }
+        .input-block input, .time-block input {
+            width: 20%;
+            text-align: center;
+            background-color: rgb(228, 255, 207);
+            border: 0;
+            border-left: 1px solid black;
+            font-size: 16px;
+        }
+        #t0{
+            border-right: 1px solid black
+        }
+
+
+
+        .inner {
+            width: 96vw;
+            height: 98vh;
+            background-color: white;
+        }
+        .inner-header{
+            display: flex;
+            justify-content: end;
+            height: 30px;
+        }
+        #result {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.262);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+        #close {
+            background-color: red;
+            height: 30px;
+            width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            color: white;
+            font-size: 20px;
+        }
+        canvas {
+            border: solid 1px black;
+        }
+        .graph {
+            height: calc(96vh - 30px);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            overflow-y: scroll;
+        }
+        .manage {
+            width: 100%;
+            height: 6vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .count {
+            background-color: #4CAF50;
+            font-size: 1rem;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            margin-top: 10px;
+            border: 3px solid #2f6931;
+        }
+        .save {
+            background-color: #4CAF50;
+            font-size: 1rem;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 10%;
+            height: 100%;
+            margin-top: 10px;
+            border: 3px solid #2f6931;
+        }
+        .load {
+            background-color: #4CAF50;
+            font-size: 1rem;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 10%;
+            height: 100%;
+            margin-top: 10px;
+            border: 3px solid #2f6931;
+        }
+
+        .count:hover, .save:hover,.load:hover {
+            background-color: #45a049;
+        }
+        .legend{
+            padding:2px;
+        }
+
+        @media(max-width: 1124px){
+            .values{
+                flex-direction: column;
+            }
+            .p0{
+                height: 40%;
+                width: 100%;
+            }
+            .flex-section{
+                width: 100%;
+                height: 60%;
+            }
+            .l,.u,.t{
+                height: 33%;
+                width: 100%;
+                margin-bottom: 0px;
+                margin-top: 2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form id="main">
+
+        <div class="values">
+            <section class="p0">
+
+                <header>
+                    <div class="inner-head">
+                        <p class="p-title">Параметры</p>
+                        <p class="p">Нач. значения</p>
+                    </div>
+                </header>
+
+                <div class="inputs scrollable">
+                </div>
+            </section>
+
+            <div class="flex-section">
+                <section class="l">
+                    <header>
+                        <div class="inner-head">
+                            <p class="p-title">Интенсивности отказа</p>
+                            <p class="p">Значения</p>
+                        </div>
+                    </header>
+    
+                    <div class="inputs scrollable">
+                    </div>
+                </section>
+
+                <section class="u">
+                    <header>
+                        <div class="inner-head">
+                            <p class="p-title">Интенсивности восстановления</p>
+                            <p class="p">Значения</p>
+                        </div>
+                    </header>
+    
+                    <div class="inputs scrollable">
+                    </div>
+                </section>
+
+                <section class="t">
+                    <header>
+                        <div class="inner-head">
+                            <p class="p-title">Рассматриваемый участок</p>
+                        </div>
+                    </header>
+    
+                    <div class="inputs scrollable">
+                        <div class="input-block">
+                            <label for="tn">[t<sub>req</sub>] - Отоборазить участок графика только от 0 до t<sub>req</sub> по оси абсцисс</label>
+                            <input id="tn" type="number" step="0.01" min="0.2" max="1" required value="1">
+                        </div>
+                        <div class="input-block">
+                            <label for="mn">[m<sub>req</sub>] - Отоборазить участок графика только от 0 до m<sub>req</sub> по оси ординат</label>
+                            <input id="mn" type="number" step="0.01" min="0.2" max="1" required value="1">
+                        </div>
+                    </div>
+                </section>
+
+                
+            </div>
+
+            
+        </div>
+
+        <section class="manage">
+            <button class="count" type="submit">Рассчитать</button>
+            <button class="save" type="button" onclick="save()">Сохранить</button>
+            <button class="load" type="button" onclick="load()">Загрузить</button>
+        </section>
+
+    </form>
+
+    <section id="result">
+        <div class="inner">
+            <header class="inner-header">
+                <button type="button" id="close">X</button>
+            </header>
+            <div class="graph scrollable">
+                <canvas id="plot"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Параметры
+        const params = {
+            "0": "Вероятность работоспособности всех 4-х элементов",
+            "1": "Вероятность работоспособности только элементов 2,3,4",
+            "2": "Вероятность работоспособности только элементов 1,3,4",
+            "3": "Вероятность работоспособности только элементов 1,2,4", 
+            "4": "Вероятность работоспособности только элементов 1,2,3",
+            "5": "Вероятность работоспособности только элементов 3,4",
+            "6": "Вероятность работоспособности только элементов 2,4",
+            "7": "Вероятность работоспособности только элементов 2,3",
+            "8": "Вероятность работоспособности только элементов 1,4",
+            "9": "Вероятность работоспособности только элементов 1,3",
+            "10": "Вероятность работоспособности только элементов 1,2",
+            "11": "Вероятность работоспособности только элемента 4",
+            "12": "Вероятность работоспособности только элемента 3",
+            "13": "Вероятность работоспособности только элемента 2",
+            "14": "Вероятность работоспособности только элемента 1",
+            "15": "Вероятность НЕработоспособности всех 4-х элементов",
+        }
+
+        const paramsDiv = document.querySelector("#main .values .p0 .inputs")
+
+        for(let key in params){
+            paramsDiv.innerHTML +=
+            `<div class="input-block">
+                <label for="P${key}">[P<sub>${key}</sub>] - ${params[key]}</label>
+                <input id="P${key}" type="number" step="0.001" min="0" max="1" required value="0">
+            </div>`;
+        }
+        paramsDiv.querySelector("#P0").value = 1;
+
+        // Константы
+        const ls = {
+            "l1": "Интенсивность отказа устройства 1",  
+            "l2": "Интенсивность отказа устройства 2", 
+            "l3": "Интенсивность отказа устройства 3", 
+            "l4": "Интенсивность отказа устройства 4", 
+        }
+
+        const lsDiv = document.querySelector("#main .values .l .inputs")
+
+        for(let key in ls){
+            main_key = key.replace(/[0-9]/, '');
+            sub_key = key.replace(main_key, '');
+            lsDiv.innerHTML +=
+            `<div class="input-block">
+                <label for="${key}">[${main_key}${sub_key ? `<sub>${sub_key}</sub>` : ''}] - ${ls[key]}</label>
+                <input id="${key}" type="number" step="0.001" min="0" required value="1">
+            </div>`;
+        }
+
+        // Константы
+        const us = {
+            "u1": "Интенсивность восстановления устройства 1",  
+            "u2": "Интенсивность восстановления устройства 2", 
+            "u3": "Интенсивность восстановления устройства 3", 
+            "u4": "Интенсивность восстановления устройства 4", 
+        }
+
+        const usDiv = document.querySelector("#main .values .u .inputs")
+
+        for(let key in us){
+            main_key = key.replace(/[0-9]/, '');
+            sub_key = key.replace(main_key, '');
+            usDiv.innerHTML +=
+            `<div class="input-block">
+                <label for="${key}">[${main_key}${sub_key ? `<sub>${sub_key}</sub>` : ''}] - ${us[key]}</label>
+                <input id="${key}" type="number" step="0.001" min="0" required value="2.5">
+            </div>`;
+        }
+    </script>
+    <script>
+        const getData = () => {
+            const form = document.querySelector("#main");
+
+            //шаблон JSON-оъекта
+            let data = {
+                'p0': {},
+                'c': {},
+                't': 1,
+                'p': 1,
+            };
+
+            //из каждого '.p0 .input-block' элемента, состоящего из input с данными о начальных значениях извлекаем значения
+            let p0s = form.querySelectorAll(".p0 .input-block");
+            for (let i = 0; i < p0s.length; i++) {
+                let key = `P${i}`;
+                data['p0'][key] = Number(p0s[i].querySelector(`#${key}`).value);
+            }
+
+            //из каждого '.l .input-block' элемента, состоящего из input с данными о значениях отказа извлекаем значения
+            let ls = form.querySelectorAll(".l .input-block");
+            for (let i = 0; i < ls.length; i++) {
+                let key = `l${i+1}`;
+                data['c'][key] = Number(ls[i].querySelector(`#${key}`).value);
+            }
+
+            //из каждого '.u .input-block' элемента, состоящего из input с данными о значениях восстановления извлекаем значения
+            let us = form.querySelectorAll(".u .input-block");
+            for (let i = 0; i < ls.length; i++) {
+                let key = `u${i+1}`;
+                data['c'][key] = Number(us[i].querySelector(`#${key}`).value);
+            }
+
+            //извлекаем интервал и шаг
+            data['t'] = Number(form.querySelector("#tn").value);
+            data['m'] = Number(form.querySelector("#mn").value);
+
+            return data;
+        }
+
+        const save = () => {
+            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(getData()));
+            let dlAnchorElem = document.createElement("a");
+            dlAnchorElem.setAttribute("href",     dataStr     );
+            dlAnchorElem.setAttribute("download", "IPST4-2024.json");
+            dlAnchorElem.click();   
+        }
+
+        const load = () => {
+            const getFileElement = document.createElement("input");
+            getFileElement.setAttribute("type", "file");
+            getFileElement.click();
+            getFileElement.onchange = (event) => {
+                return new Promise((resolve, reject) => {
+                    const fileReader = new FileReader()
+                    fileReader.onload = (e) => {
+                        let obj = e.target.result;
+                        try{
+                            resolve(JSON.parse(obj));
+                        }
+                        catch {
+                            alert("Неверный формат файла");
+                        }
+                    }
+                    fileReader.readAsText(event.target.files[0]);
+                }).then(data => {
+                    let p0s = form.querySelectorAll(".p0 .input-block");
+                    for (let i = 0; i < p0s.length; i++) {
+                        let key = `P${i}`;
+                        p0s[i].querySelector(`#${key}`).value = data['p0'][key];
+                    }
+
+                    let ls = form.querySelectorAll(".l .input-block");
+                    for (let i = 0; i < ls.length; i++) {
+                        let key = `l${i+1}`;
+                        ls[i].querySelector(`#${key}`).value = data['c'][key];
+                    }
+
+                    let us = form.querySelectorAll(".u .input-block");
+                    for (let i = 0; i < ls.length; i++) {
+                        let key = `u${i+1}`;
+                        us[i].querySelector(`#${key}`).value = data['c'][key];
+                    }
+
+                    form.querySelector("#tn").value = data['t']
+                    form.querySelector("#mn").value = data['m']
+
+                }).catch((err => {
+                    alert(err);
+                }))
+            }
+        }
+    </script>
+    <script>
+
+        //Инициализация холстов для отрисовки графика и лепестковых диаграмм с применением Chart.js
+        const plot = document.getElementById('plot');
+        let chart;
+
+        //основные элементы страницы
+        const form = document.querySelector("#main");
+        const resWin = document.getElementById('result');
+        const resultDown = document.getElementById('close');
+
+        //при отправке формы - формируем JSON-объект, требуемый для POST-запроса на вычиления
+        form.onsubmit = (e) => {
+            e.preventDefault();
+
+            let localData = getData();
+
+            //выполняем запрос при помощи FETCH
+            fetch('/api/lab4/count', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(localData)
+            })
+                .then(res => res.json())
+                .then(res => {
+                    // на основе полученного ответа отриосвываем графики, на ранее заданных холстах:
+                    console.log(res)
+                    let sol = res['solution'];
+                    let t = res['time'];
+                    creatrGraph(sol, t, localData.m); 
+                })
+                .then(
+                    res => {
+                        resWin.style.display = "flex"
+                    }
+                )
+                .catch(e => alert("Решение не найдено!"));
+                ;
+        }
+
+        //скрыть окно результатов при закрытии
+        resultDown.onclick = () => {
+            resWin.style.display = "none";
+        }
+
+        const legend = [
+            '[P0]  - Рабочие эл-ты: 1,2,3,4',
+            '[P1]  - Рабочие эл-ты: 2,3,4  ',
+            '[P2]  - Рабочие эл-ты: 1,3,4  ',
+            '[P3]  - Рабочие эл-ты: 1,2,4  ',
+            '[P4]  - Рабочие эл-ты: 1,2,3  ',
+            '[P5]  - Рабочие эл-ты: 3,4    ',
+            '[P6]  - Рабочие эл-ты: 2,4    ',
+            '[P7]  - Рабочие эл-ты: 2,3    ',
+            '[P8]  - Рабочие эл-ты: 1,4    ',
+            '[P9]  - Рабочие эл-ты: 1,3    ',
+            '[P10] - Рабочие эл-ты: 1,2    ',
+            '[P11] - Рабочие эл-ты: 4      ',
+            '[P12] - Рабочие эл-ты: 3      ',
+            '[P13] - Рабочие эл-ты: 2      ',
+            '[P14] - Рабочие эл-ты: 1      ',
+            '[P15] - Нет рабочих эл-тов    ',
+        ]
+
+        //отрисовка графиков изменения параметров xi(t) на основе объекта решений solution
+        const creatrGraph = (solution, time, maxY) => {
+
+            //удаляем старый график
+            chart?.destroy();
+
+            //готовим шаблон для построения графика
+            let data = {
+                labels: time,
+                datasets: [],
+            }
+
+            //заполняем массив datasets из шаблона
+            for (let i = 0; i < solution[0].length; i++) {
+
+                // получаем ряд значений для каждого параметра pi(t)
+                let values = [];
+                for (let j = 0; j < solution.length; j++) {
+                    values.push(solution[j][i]);
+                }
+
+                //формируем график очередного параметра xi(t)
+                let dataset = {
+                    label: legend[i],
+                    data: values.map(i => i > maxY ? null : i),
+                    fill: false,
+                    borderColor: getColor(i),
+                    tension: 0.1,
+                    pointRadius: 3,
+                    borderDash: getLineStyle(i),
+                }
+                data.datasets.push(dataset);
+            }
+
+            // Отрисовываем график
+            chart = new Chart(plot, {
+                type: 'line',
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            align: 'center',
+                            fullSize:true,
+                            labels: {
+                                boxWidth: 20
+                            }
+                         }
+                    },
+                }
+            });
+        }
+
+        // Стилизация графиков
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        const colors = ["red","orange","rgb(213, 216, 0)","rgb(7, 203, 0)","green","rgb(0, 207, 166)","blue","violet","purple","black","brown","gray"];
+
+        function getColor(i) {
+            return colors[i%colors.length];
+        }
+        function getLineStyle(i) {
+            if (i <= colors.length - 1) return [];
+            if (i <= 2*colors.length - 1) return [5, 2];
+            if (i <= 3*colors.length - 1) return [20, 5, 20, 5];
+        }
+
+    </script>
+</body>
+
+</html>
